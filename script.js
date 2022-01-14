@@ -8,6 +8,10 @@ snake[0] = {
     x: 8 * box,
     y: 8 * box
 }
+let oldSnakeLength = snake.length;//Variável do estado anterior da cobrinha
+let deltaLength = 2;// Varição de tamanho que altera o tempo
+let time = 150;//Variável do tempo da velocidade do jogo
+let timeDecrement = 1;//Variável de decremento do tempo
 
 let direction = "right";
 let food = {
@@ -72,6 +76,12 @@ function iniciarJogo() {
     else{
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
+        if (snake.length-oldSnakeLength == deltaLength){
+            oldSnakeLength = snake.length;
+            time -= timeDecrement;
+            clearInterval(jogo);
+            jogo = setInterval(iniciarJogo, time);
+        }
     }
 
     let newHead = {
@@ -83,4 +93,4 @@ function iniciarJogo() {
 
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+let jogo = setInterval(iniciarJogo, time);
